@@ -1,0 +1,90 @@
+###################################################
+## What is different from regular React ###########
+###################################################
+
+- preact doesn't need the equivalent of react-dom. It has render method.
+
+- Need preact-redux instead of react-redux
+
+- Need styled-jsx-preact instead of styled-jsx-react
+
+- Need @babel/plugin-transform-react-jsx with pragma option 'h' instead of @babel/preset-react
+
+- Need enzyme-adapter-preact-pure instead of enzyme-adapter-react-16
+
+###################################################
+## (1) Installation ###############################
+###################################################
+
+# preact
+npm i --save preact redux preact-redux redux-thunk preact-context
+
+# webpack
+npm i --save-dev webpack html-webpack-plugin mini-css-extract-plugin uglifyjs-webpack-plugin copy-webpack-plugin optimize-css-assets-webpack-plugin webpack-dev-server webpack-cli css-loader sass-loader
+
+# style - bootstrap, styled-jsx-preact (https://www.npmjs.com/package/styled-jsx-preact)
+npm i --save bootstrap styled-jsx-preact node-sass
+
+# babel
+# use @babel/plugin-transform-react-jsx with pragma option instead of @babel/preset-react
+npm  i --save-dev @babel/core @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime @babel/polyfill @babel/preset-env @babel/register @babel/runtime babel-loader @babel/plugin-transform-react-jsx
+
+# eslint
+npm i --save-dev eslint eslint-plugin-react babel-eslint eslint-config-airbnb
+
+# unit test 
+# use enzyme-adapter-preact-pure instead of enzyme-adapter-react-16 (https://www.npmjs.com/package/enzyme-adapter-preact-pure)
+npm i --save-dev mocha chai jsdom enzyme enzyme-adapter-preact-pure
+
+
+###################################################
+## (2) .babelrc ###############################
+###################################################
+
+documentation suggests to use preact.h (https://preactjs.com/guide/getting-started). however it needs to be h. otherwise cannot find preact error
+
+
+
+#######################################################
+## (3) ESLint
+#######################################################
+
+Don't need settings
+
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "jest": false,
+    "mocha": false,
+    "es6": true
+  },
+  "extends": [
+  ],
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "h",
+      "version": "detect",
+      "flowVersion": "0.53"
+    },
+    "propWrapperFunctions": [
+      
+        "forbidExtraProps",
+        {"property": "freeze", "object": "Object"},
+        {"property": "myFavoriteWrapper"}
+    ],
+    "linkComponents": [
+      "Hyperlink",
+      {"name": "Link", "linkAttribute": "to"}
+    ]
+  },
+  "parser": "babel-eslint",
+   "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+        "jsx": true
+    }
+  },
+  ...

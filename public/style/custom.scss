@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Geostar+Fill|Monoton|Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #020202f2;
+  color: white;
+}
+
+.img-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #000000;
+  z-index: -10;
+}
+.header-container {
+  margin: 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 119px;
+  z-index: 1;
+}
+
+.header-title {
+  font-family: 'Bungee Inline', cursive;
+  color: #d6d19a;
+}
+
+.star-wars-logo {
+  width: 200px;
+  position: relative;
+  left: 40px;
+}
+
+.opening-crawl-container {
+  margin-top: 30px;
+}
+
+.opening-crawl-title {
+  color: #15b7bd;
+}
+
+
+.query-form {
+  margin-top: 40px;
+}
+
+.search-text-input {
+  margin-top: 20px;
+}
+
+.btn-section-search {
+  margin-top: 40px;
+  width: 160px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #15b7bd;
+  border-color: #15b7bd;
+}
+
+.btn-primary:hover {
+  color: #15b7bd;
+  background-color:#f5f7f6;
+  border-color: #15b7bd;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: none;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: grey;
+  border-color: grey;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #15b7bd;
+  background-color:#f5f7f6;
+  border-color: #15b7bd;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: none
+}
+
+/* Result table style */
+.search-result-title {
+  color: #15b7bd;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.result-tr {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.result-th, .result-td {
+  width: 50%;
+  padding: 10px 10px;
+  border: white solid 1px;
+}
+.result-td {
+  background-color: #f7ef95;
+  color: black;
+}
+.result-th {
+  background-color: #fff47b;
+  color: black;
+}
+
+@media (max-width: 600px) {
+  .result-tr {
+    display: flex;
+    flex-direction: column;
+  }
+  .result-th, .result-td {
+    width: 100%;
+    padding: 5px 5px;
+  }
+}
