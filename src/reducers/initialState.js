@@ -2,7 +2,9 @@ export const initialState = {
   information: {
     selectedCategory: '',
     searchKeyword: '',
-    person: {},
+    person: {
+      name: ''
+    },
     film: {},
     planet: {},
     species: {},

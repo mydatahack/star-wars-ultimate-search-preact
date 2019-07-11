@@ -17,7 +17,8 @@ import {
   STARSHIPS
 } from '../constants/constantValues'
 
-import { searchByCategory, interateApiCall } from '../utils/api'
+import { searchByCategory } from '../utils/api'
+import { personMapper } from '../utils/mapper'
 
 export const updateSelectedCategory = (selectedCategory) => {
   return {
@@ -77,15 +78,17 @@ const updateVehicle = (vehicle) => {
 
 export const submitSearchResult =  (keyword) => {
   return async (dispatch, getState) => {
-    try{
+    try {
       const selectedCategory = getState().information.selectedCategory
       console.log('checking selectedCategory: ', selectedCategory)
       const searchData = await searchByCategory(selectedCategory, keyword)
       console.log('checking searchData ', searchData)
-      const transformedData = await interateApiCall(searchData.results[0])
+
       switch(selectedCategory) {
       case PEOPLE:
-        dispatch(updatePerson(transformedData))
+        const person = await personMapper(searchData.results[0])
+        console.log('checking person data: ', person)
+        dispatch(updatePerson(person))
         break
       case FILMS:
         dispatch(updateFilm(transformedData))

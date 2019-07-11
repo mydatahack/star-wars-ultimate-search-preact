@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact'
 import Header from './components/Header'
 import SearchFormContainer from './components/containers/SearchFormContainer'
 import DivContainer from './components/DivContainer'
+import ResultTableContainer from './components/containers/ResultTableContainer'
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Header />
       <DivContainer className='offset-md-3 col-md-6'>
         <SearchFormContainer />
+        <ResultTableContainer />
       </DivContainer>
     </div>
   )

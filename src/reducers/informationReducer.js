@@ -21,6 +21,7 @@ const information = (state = initialState.information, action) => {
     return Object.assign({}, state, { searchKeyword: action.keyword })
 
   case UPDATE_PERSON:
+    console.log('inside reducer, checking data...', Object.assign({}, state, { person: action.person }))
     return Object.assign({}, state, { person: action.person })
 
   case UPDATE_FILM:

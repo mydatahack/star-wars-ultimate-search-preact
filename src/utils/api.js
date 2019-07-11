@@ -56,29 +56,8 @@ export const searchByCategory = async (category, keyword) => {
   }
 }
 
-export const interateApiCall = async (response) => {
-
-  for (const key in response) {
-    // check to see if data point is array or not
-    if(Array.isArray(response[key])) {
-      const urlArray = response[key]
-
-      // if array, get url and replace the data with api call
-      urlArray.forEach(async (url, index) => {
-
-        const data = await searchRequest(url)
-        if (key == 'films') {
-          response[key][index] = data.title
-        } else {
-          response[key][index] = data.name
-        }
-      })
-    // handling non array case
-    } else if (key === 'homeworld') {
-      const url = response[key]
-      const data = await searchRequest(url)
-      response[key] = data.name
-    }
-  }
-  return response
+export const doArrayApiCall = (urlArray) => {
+  return Promise.all(urlArray.map(url => searchRequest(url)))
+    .then(array => array)
+    .catch(err => err)
 }

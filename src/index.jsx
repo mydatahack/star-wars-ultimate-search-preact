@@ -14,6 +14,8 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 )
 
+console.log('store initiated ', store)
+
 render(
   <Provider store={store}>
     <App />
