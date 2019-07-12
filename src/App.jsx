@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <Header />
-      <DivContainer className='offset-md-3 col-md-6'>
+      <DivContainer className='offset-lg-3 col-lg-6'>
         <SearchFormContainer />
         <ResultTableContainer />
       </DivContainer>

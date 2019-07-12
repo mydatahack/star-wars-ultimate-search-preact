@@ -1,4 +1,5 @@
 export const person = {
+  resource: '',
   name: '',
   homeworld: '',
   starships: [],

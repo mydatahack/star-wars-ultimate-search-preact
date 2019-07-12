@@ -1,12 +1,10 @@
 import {
   UPDATE_SELECTED_CATEGORY,
   UPDATE_SEARCH_KEYWORD,
-  UPDATE_PERSON,
-  UPDATE_FILM,
-  UPDATE_PLANET,
-  UPDATE_SPECIES,
-  UPDATE_STARSHIP,
-  UPDATE_VEHICLE,
+  UPDATE_SEARCH_RESULT,
+  UPDATE_FETCHING,
+  UPDATE_FAIL,
+  UPDATE_SUCCESS
 } from '../constants/actionTypes'
 
 import {
@@ -34,80 +32,78 @@ export const updateSearchKeyword = (keyword) => {
   }
 }
 
-const updatePerson = (person) => {
+const updateSearchResult = (searchResult) => {
   return {
-    type: UPDATE_PERSON,
-    person
+    type: UPDATE_SEARCH_RESULT,
+    searchResult
   }
 }
 
-const updateFilm = (film) => {
+const updateFetching = (fetching) => {
   return {
-    type: UPDATE_FILM,
-    film
+    type: UPDATE_FETCHING,
+    fetching
   }
 }
 
-const updatePlanet = (planet) => {
+const updateApiSuccess = (apiSuccess) => {
   return {
-    type: UPDATE_PLANET,
-    planet
+    type: UPDATE_SUCCESS,
+    apiSuccess
   }
 }
 
-const updateSpecies = (species) => {
+const updateApiFail = (apiFailed) => {
   return {
-    type: UPDATE_SPECIES,
-    species
-  }
-}
-
-const updateStarship = (starship) => {
-  return {
-    type: UPDATE_STARSHIP,
-    starship
-  }
-}
-
-const updateVehicle = (vehicle) => {
-  return {
-    type: UPDATE_VEHICLE,
-    vehicle
+    type: UPDATE_FAIL,
+    apiFailed
   }
 }
 
 export const submitSearchResult =  (keyword) => {
   return async (dispatch, getState) => {
+
+    // Setting API status
+    dispatch(updateFetching(true))
+    dispatch(updateApiFail(false))
+
+    // Start API
     try {
       const selectedCategory = getState().information.selectedCategory
       console.log('checking selectedCategory: ', selectedCategory)
       const searchData = await searchByCategory(selectedCategory, keyword)
       console.log('checking searchData ', searchData)
 
+      // searchResult to be passed into action
+      let searchResult
+
       switch(selectedCategory) {
       case PEOPLE:
-        const person = await personMapper(searchData.results[0])
-        console.log('checking person data: ', person)
-        dispatch(updatePerson(person))
+        searchResult = await personMapper(searchData.results[0])
+        console.log('checking person data: ', searchResult)
         break
       case FILMS:
-        dispatch(updateFilm(transformedData))
+
         break
       case PLANETS:
-        dispatch(updatePlanet(transformedData))
+
         break
       case SPECIES:
-        dispatch(updateSpecies(transformedData))
+
         break
       case STARSHIPS:
-        dispatch(updateStarship(transformedData))
+
         break
       case VEHICLES:
-        dispatch(updateVehicle(transformedData))
+
         break
       }
+      dispatch(updateFetching(false))
+      dispatch(updateApiSuccess(true))
+      dispatch(updateSearchResult(searchResult))
     } catch(e) {
-      console.log(e)
+      dispatch(updateFetching(false))
+      dispatch(updateApiFail(true))
     }
   }
 }

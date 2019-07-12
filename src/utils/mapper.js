@@ -1,5 +1,13 @@
 import { searchRequest, doArrayApiCall } from './api'
 import { person } from './models'
+import {
+  PEOPLE,
+  FILMS,
+  PLANETS,
+  SPECIES,
+  STARSHIPS,
+  VEHICLES
+} from '../constants/constantValues'
 
 export const mapper = (response, model) => {
 
@@ -16,6 +24,7 @@ export const mapper = (response, model) => {
 
 export const personMapper = async (response) => {
 
+  person.resource = PEOPLE
   person.name = response.name
   person.homeworld = (await searchRequest(response.homeworld)).name
   person.starships = (await doArrayApiCall(response.starships)).map(data => data.name)

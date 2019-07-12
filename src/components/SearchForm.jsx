@@ -47,7 +47,8 @@ class SearchForm extends Component {
               inputHandler={onUpdateSearchKeyword}
             />
           }
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-between align-items-end">
+            <p class="swapi-ref"><a class="swapi-link" href="https://swapi.co/" target="_blank">Powered by SWAPI</a></p>
             <button
               type="button"
               className="btn btn-primary btn-section-search"

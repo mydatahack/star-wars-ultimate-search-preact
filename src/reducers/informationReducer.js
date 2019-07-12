@@ -2,14 +2,13 @@ import { initialState } from './initialState'
 import {
   UPDATE_SELECTED_CATEGORY,
   UPDATE_SEARCH_KEYWORD,
-  UPDATE_PERSON,
-  UPDATE_FILM,
-  UPDATE_PLANET,
-  UPDATE_SPECIES,
-  UPDATE_STARSHIP,
-  UPDATE_VEHICLE,
+  UPDATE_SEARCH_RESULT,
+  UPDATE_FETCHING,
+  UPDATE_SUCCESS,
+  UPDATE_FAIL,
 
 } from '../constants/actionTypes'
+
 
 const information = (state = initialState.information, action) => {
   switch(action.type) {
@@ -20,25 +19,18 @@ const information = (state = initialState.information, action) => {
   case UPDATE_SEARCH_KEYWORD:
     return Object.assign({}, state, { searchKeyword: action.keyword })
 
-  case UPDATE_PERSON:
-    console.log('inside reducer, checking data...', Object.assign({}, state, { person: action.person }))
-    return Object.assign({}, state, { person: action.person })
+  case UPDATE_SEARCH_RESULT:
+    console.log('inside reducer, checking data...', Object.assign({}, state, { person: action.searchResult }))
+    return { ...state, ...{ searchResult: action.searchResult }}
 
-  case UPDATE_FILM:
-    return Object.assign({}, state, { film: action.film })
+  case UPDATE_FETCHING:
+    return { ...state, ...{ fetching: action.fetching }}
 
-  case UPDATE_PLANET:
-    return Object.assign({}, state, { planet: action.planet })
+  case UPDATE_SUCCESS:
+    return { ...state, ...{ apiSuccess: action.apiSuccess }}
 
-  case UPDATE_SPECIES:
-    return Object.assign({}, state, { species: action.species })
-
-  case UPDATE_STARSHIP:
-    return Object.assign({}, state, { starship: action.starship })
-
-  case UPDATE_VEHICLE:
-    return Object.assign({}, state, { vehicle: action.vehicle })
-
+  case UPDATE_FAIL:
+    return { ...state, ... { apiFailed: action.apiFailed}}
   default:
     return state
   }

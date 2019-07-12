@@ -9,7 +9,6 @@ const DivContainer = (props) => {
         </div>
       </div>
     </div>
-
   )
 }
 

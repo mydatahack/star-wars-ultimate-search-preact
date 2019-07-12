@@ -2,13 +2,10 @@ export const initialState = {
   information: {
     selectedCategory: '',
     searchKeyword: '',
-    person: {
-      name: ''
-    },
-    film: {},
-    planet: {},
-    species: {},
-    starship: {},
-    vehicle: {}
+    fetching: false,
+    apiSuccess: false,
+    apiFailed: false,
+    suggestions: [],
+    searchResult: {}
   }
 }

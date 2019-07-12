@@ -9,11 +9,14 @@ import  {
   SPECIES_PLACEHOLDER,
   STARSHIPS_LABEL,
   STARSHIPS_PLACEHOLDER,
+  VEHICLES_LABEL,
+  VEHICLES_PLACEHOLDER,
   PEOPLE,
   FILMS,
   PLANETS,
   SPECIES,
-  STARSHIPS
+  STARSHIPS,
+  VHEICLES
 
 } from '../constants/constantValues'
 
@@ -42,6 +45,10 @@ export const getSearchKeywordText = (selectedCategory) => {
   case STARSHIPS:
     data.label = STARSHIPS_LABEL
     data.placeholder = STARSHIPS_PLACEHOLDER
+    break
+  case VEHICLES:
+    data.label = VEHICLES_LABEL
+    data.placeholder = VEHICLES_PLACEHOLDER
     break
   default:
     break
