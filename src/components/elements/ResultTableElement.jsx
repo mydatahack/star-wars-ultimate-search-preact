@@ -1,5 +1,6 @@
 import { h } from 'preact'
 import ResultTableDataList from './ResultTableDataList'
+import { tbHeaderFormatter } from '../../utils/helper'
 
 const ResultTableElement = ({searchResult}) => {
   const keyArray = Object.keys(searchResult)
@@ -13,7 +14,7 @@ const ResultTableElement = ({searchResult}) => {
       }
       return (
         <tr class="result-tr">
-          <th class="result-th">{key}</th>
+          <th class="result-th">{tbHeaderFormatter(key)}</th>
           <td class="result-td" class="result-td">{list}</td>
         </tr>
       )

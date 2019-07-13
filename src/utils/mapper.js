@@ -67,8 +67,8 @@ export const planetMapper = async (response) => {
   planet.gravity = response.gravity
   planet.population = response.population
   planet.climate = response.climate
-  planet.terrain = repsone.terrain
-  planet.surface_water = planet.surface_water
+  planet.terrain = response.terrain
+  planet.surface_water = response.surface_water
   planet.residents = (await doArrayApiCall(response.residents)).map(data => data.name)
   planet.films = (await doArrayApiCall(response.films)).map(data => data.title)
   return planet

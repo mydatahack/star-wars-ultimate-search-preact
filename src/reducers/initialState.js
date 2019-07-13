@@ -10,6 +10,7 @@ export const initialState = {
     fetchingSuggestionFailed: false,
     stopAutoScroll: true,
     showAutoSuggestion: false,
+    focusKeywordInput: false,
     suggestions: [],
     searchResult: {}
   }

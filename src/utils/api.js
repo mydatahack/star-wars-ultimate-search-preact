@@ -14,7 +14,6 @@ import  {
 
 } from '../constants/constantValues'
 
-
 export const searchRequest = (url) => {
   return fetch(url)
     .then((response) => {

@@ -57,7 +57,6 @@ export const species = {
 export const starship = {
   resource: '',
   name: '',
-  pilots: [],
   model: '',
   starship_class: '',
   manufacturer: '',
@@ -70,13 +69,13 @@ export const starship = {
   MGLT: '',
   cargo_capacity: '',
   consumables: '',
+  pilots: [],
   films: []
 }
 
 export const vehicle = {
   resource: '',
   name: '',
-  pilots: [],
   model: '',
   vehicle_class: '',
   length: '',
@@ -86,5 +85,6 @@ export const vehicle = {
   max_atmosphering_speed: '',
   cargo_capacity: '',
   consumables: '',
+  pilots: [],
   films: []
 }

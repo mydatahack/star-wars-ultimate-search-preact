@@ -10,7 +10,8 @@ import {
   UPDATE_FETCHING_SUGGESTION_SUCCESS,
   UPDATE_FETCHING_SUGGESTION_FAIL,
   UPDATE_STOP_AUTO_SCROLL,
-  UPDATE_SHOW_AUTO_SUGGESTION
+  UPDATE_SHOW_AUTO_SUGGESTION,
+  UPDATE_FOCUS_KEYWORD_INPUT
 } from '../constants/actionTypes'
 
 import {
@@ -67,10 +68,10 @@ const updateApiSuccess = (apiSuccess) => {
   }
 }
 
-const updateApiFail = (apiFail) => {
+const updateApiFail = (apiFailed) => {
   return {
     type: UPDATE_FAIL,
-    apiFail
+    apiFailed
   }
 }
 
@@ -112,6 +113,13 @@ export const updateShowAutoSuggestion = (showAutoSuggestion) => {
   return {
     type: UPDATE_SHOW_AUTO_SUGGESTION,
     showAutoSuggestion
+  }
+}
+
+export const updateFocusKeywordInput = (focusKeywordInput) => {
+  return {
+    type: UPDATE_FOCUS_KEYWORD_INPUT,
+    focusKeywordInput
   }
 }
 
@@ -167,7 +175,9 @@ export const submitSearchResult =  (keyword) => {
 
     // Setting API status
     dispatch(updateFetching(true))
-    dispatch(updateApiFail(false))
+    if(getState().information.apiFailed) {
+      dispatch(updateApiFail(false))
+    }
 
     // Start API
     try {
@@ -207,6 +217,7 @@ export const submitSearchResult =  (keyword) => {
         dispatch(updateStopAutoScroll(false))
       }
     } catch(e) {
+      console.log(e)
       dispatch(updateFetching(false))
       dispatch(updateApiFail(true))
     }

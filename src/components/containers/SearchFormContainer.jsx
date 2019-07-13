@@ -5,7 +5,8 @@ import {
   updateSelectedCategory,
   updateShowAutoSuggestion,
   updateSuggestionResults,
-  submitSearchResult
+  submitSearchResult,
+  updateFocusKeywordInput
 } from '../../actions/searchFormAction'
 
 const mapStateToProps = (state) => {
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch, ownProps, state) => {
     },
     onUpdateShowAutoSuggestion: (show) => {
       dispatch(updateShowAutoSuggestion(show))
+    },
+    onUpdateFocusKeywordInput: (focus) => {
+      dispatch(updateFocusKeywordInput(focus))
     }
   }
 }

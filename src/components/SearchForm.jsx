@@ -1,12 +1,29 @@
 import { h, render, Component} from 'preact'
 import SearchInput from './SearchInput'
 import { SELECT_FIELD_HELP } from '../constants/constantValues'
+import SquareLoader from '../components/elements/SquareLoader'
 
 class SearchForm extends Component {
 
   render() {
-    const { selectedCategory, searchKeyword, suggestions, fetchingSuggestionSuccess, showAutoSuggestion } = this.props.information
-    const { onUpdateSelectedCategory, onUpdateSearchKeyword, onSubmitSearchResult, onUpdateShowAutoSuggestion } = this.props
+    const {
+      selectedCategory,
+      searchKeyword,
+      suggestions,
+      fetchingSuggestionSuccess,
+      showAutoSuggestion,
+      focusKeywordInput,
+      fetchingSuggestion
+    } = this.props.information
+
+    const {
+      onUpdateSelectedCategory,
+      onUpdateSearchKeyword,
+      onSubmitSearchResult,
+      onUpdateShowAutoSuggestion,
+      onUpdateFocusKeywordInput
+    } = this.props
+
     return (
       <div>
         <div className="opening-crawl-container">
@@ -25,6 +42,7 @@ class SearchForm extends Component {
             value={selectedCategory}
             onChange={e => {
               onUpdateSelectedCategory(e.target.value)
+              onUpdateFocusKeywordInput(true)
             }}
           >
             <option value="">Select a category you may</option>
@@ -45,14 +63,21 @@ class SearchForm extends Component {
               onUpdateSearchKeyword={onUpdateSearchKeyword}
               onUpdateShowAutoSuggestion={onUpdateShowAutoSuggestion}
               showAutoSuggestion={showAutoSuggestion}
+              focusKeywordInput={focusKeywordInput}
+              fetchingSuggestion={fetchingSuggestion}
             />
           }
           <div className="d-flex justify-content-between align-items-end">
             <p class="swapi-ref"><a class="swapi-link" href="https://swapi.co/" target="_blank">Powered by SWAPI</a></p>
+            {fetchingSuggestion && showAutoSuggestion && <SquareLoader/>}
             <button
               type="submit"
               className="btn btn-primary btn-section-search"
-              onClick={(e) => {e.preventDefault();onSubmitSearchResult(searchKeyword)}}
+              onClick={(e) => {
+                e.preventDefault()
+                onSubmitSearchResult(searchKeyword)
+                onUpdateFocusKeywordInput(false)
+              }}
               disabled={!searchKeyword.length}
             >Use Force
             </button>

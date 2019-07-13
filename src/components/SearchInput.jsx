@@ -3,13 +3,19 @@ import { getSearchKeywordText } from '../utils/getSearchKeywordText'
 import { INPUT_FIELD_HELP } from '../constants/constantValues'
 import AutoSuggestion from './AutoSuggestion'
 
-
 class SearchInput extends Component {
 
   focusKeywordInput = () => {
-    if (this.keywordInput) this.keywordInput.focus()
+    if (this.keywordInput && this.props.focusKeywordInput) {
+      console.log('checking window width', window.innerWidth)
+      this.keywordInput.focus()
+      if (window.innerWidth <= 600) {
+        this.keywordInputLabel.scrollIntoView({ alignToTop: 'true', behavior: 'smooth'})
+        console.log('scrolling to top (keybord input)')
+      }
+    }
   }
-  componentDidMount() {
+  componentDidUpdate() {
     this.focusKeywordInput()
   }
 
@@ -22,13 +28,21 @@ class SearchInput extends Component {
       fetchingSuggestionSuccess,
       onUpdateSearchKeyword,
       onUpdateShowAutoSuggestion,
-      showAutoSuggestion
+      showAutoSuggestion,
     } = this.props
+
     const data = getSearchKeywordText(selectedCategory)
+
     this.focusKeywordInput()
+
     return (
       <div className="search-text-input">
-        <label htmlFor="keyword">{data.label}</label>
+        <label
+          htmlFor="keyword"
+          ref={element => this.keywordInputLabel = element}
+        >
+          {data.label}
+        </label>
         <p class="keyword-input-help">
           {INPUT_FIELD_HELP}
         </p>

@@ -8,7 +8,7 @@ class ResultTable extends Component {
   state = this.props.information.searchResult
   scrollResults = () => {
     if(this.searchTitle) {
-      this.searchTitle.scrollIntoView({ behavior: 'smooth'})
+      this.searchTitle.scrollIntoView({ alignToTop: 'true', behavior: 'smooth'})
     }
   }
 
@@ -42,6 +42,10 @@ class ResultTable extends Component {
               </tbody>
             </table>
           </div>
+        }
+        {/* Todo: need to come up with better way to focus to input on mobile */}
+        {(!apiSuccess && window.innerWidth <= 500) &&
+          <div style="height: 500px"></div>
         }
       </div>
     )

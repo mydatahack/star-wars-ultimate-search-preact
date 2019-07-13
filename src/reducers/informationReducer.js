@@ -11,7 +11,8 @@ import {
   UPDATE_FETCHING_SUGGESTION_SUCCESS,
   UPDATE_FETCHING_SUGGESTION_FAIL,
   UPDATE_STOP_AUTO_SCROLL,
-  UPDATE_SHOW_AUTO_SUGGESTION
+  UPDATE_SHOW_AUTO_SUGGESTION,
+  UPDATE_FOCUS_KEYWORD_INPUT
 
 } from '../constants/actionTypes'
 
@@ -54,6 +55,9 @@ const information = (state = initialState.information, action) => {
 
   case UPDATE_SHOW_AUTO_SUGGESTION:
     return { ...state, ...{ showAutoSuggestion: action.showAutoSuggestion }}
+
+  case UPDATE_FOCUS_KEYWORD_INPUT:
+    return { ...state, ...{ focusKeywordInput: action.focusKeywordInput }}
 
   default:
     return state
