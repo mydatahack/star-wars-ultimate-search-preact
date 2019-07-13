@@ -9,7 +9,8 @@ import  {
   FILMS,
   PLANETS,
   SPECIES,
-  STARSHIPS
+  STARSHIPS,
+  VEHICLES
 
 } from '../constants/constantValues'
 
@@ -60,4 +61,20 @@ export const doArrayApiCall = (urlArray) => {
   return Promise.all(urlArray.map(url => searchRequest(url)))
     .then(array => array)
     .catch(err => err)
+}
+
+export const getSuggestion = async (category, keyword) => {
+  try {
+    console.log(getCategoryUrl(category) + keyword)
+    const data = await searchRequest(getCategoryUrl(category) + keyword)
+    let suggestions
+    if (category !== FILMS) {
+      suggestions = data.results.map((data) => data.name)
+    } else {
+      suggestions = data.results.map((data) => data.title)
+    }
+    return suggestions
+  } catch(e) {
+    return e
+  }
 }

@@ -1,28 +1,51 @@
-import { h } from 'preact'
-import Spinner from './Spinner'
-import ResultTableElement from './ResultTableElement'
+import { h, Component } from 'preact'
+import Spinner from './elements/Spinner'
+import ResultTableElement from './elements/ResultTableElement'
 
-const ResultTable = ({ information }) => {
-  const { searchResult, fetching, apiSuccess } = information
-  let resultTitle
-  if (apiSuccess) {
-    resultTitle = searchResult.resource === 'films' ? searchResult.title : searchResult.name
+
+class ResultTable extends Component {
+
+  state = this.props.information.searchResult
+  scrollResults = () => {
+    if(this.searchTitle) {
+      this.searchTitle.scrollIntoView({ behavior: 'smooth'})
+    }
   }
-  return (
-    <div>
-      {fetching && <Spinner />}
-      {apiSuccess &&
-        <div>
-          <h2 class="search-result-title">{resultTitle}</h2>
-          <table class="result-table">
-            <tbody class="result-table-body">
-              <ResultTableElement searchResult={searchResult} />
-            </tbody>
-          </table>
-        </div>
-      }
-    </div>
-  )
+
+  componentDidUpdate() {
+    if (!this.props.information.stopAutoScroll) {
+      this.scrollResults()
+    }
+  }
+
+  render() {
+    const { searchResult, fetching, apiSuccess } = this.props.information
+    let resultTitle
+    if (apiSuccess) {
+      resultTitle = searchResult.resource === 'films' ? searchResult.title : searchResult.name
+    }
+
+    return (
+      <div>
+        <div class="dummy" ref={element => this.searchTitle = element}></div>
+        {fetching && <Spinner />}
+        {apiSuccess &&
+          <div class="search-result-container">
+            <h2
+              class="search-result-title"
+            >
+              {resultTitle}
+            </h2>
+            <table class="result-table">
+              <tbody class="result-table-body">
+                <ResultTableElement searchResult={searchResult} />
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    )
+  }
 }
 
 export default ResultTable

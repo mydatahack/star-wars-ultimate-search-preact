@@ -1,36 +1,31 @@
 import { h, render, Component} from 'preact'
 import SearchInput from './SearchInput'
-// for testing api call
-import { searchRequest, interateApiCall } from '../utils/api'
-import { PEOPLE_SEARCH_URL } from '../constants/constantValues'
+import { SELECT_FIELD_HELP } from '../constants/constantValues'
 
 class SearchForm extends Component {
 
-  // async componentDidMount() {
-
-  //   const response = await searchRequest(PEOPLE_SEARCH_URL + 'luke')
-  //   console.log('checking response: ', response.results[0])
-  //   const secondReponse = await interateApiCall(response.results[0])
-  //   console.log('chcking the final response', secondReponse)
-  // }
-
   render() {
-    const { selectedCategory, searchKeyword } = this.props.information
-    const { onUpdateSelectedCategory, onUpdateSearchKeyword, onSubmitSearchResult } = this.props
+    const { selectedCategory, searchKeyword, suggestions, fetchingSuggestionSuccess, showAutoSuggestion } = this.props.information
+    const { onUpdateSelectedCategory, onUpdateSearchKeyword, onSubmitSearchResult, onUpdateShowAutoSuggestion } = this.props
     return (
       <div>
         <div className="opening-crawl-container">
           <h4 className="opening-crawl-title">A long time ago in a galaxy far,</h4>
           <h4 className="opening-crawl-title">far away....</h4>
         </div>
-        <form className="query-form">
-          <label htmlFor="category">Category</label>
+        <form autocomplete="off" className="query-form">
+          <label htmlFor="category">Choose Category</label>
+          <p class="keyword-input-help">
+            {SELECT_FIELD_HELP}
+          </p>
           <select
             className="form-control"
             id="category"
             name="category"
             value={selectedCategory}
-            onChange={e => {onUpdateSelectedCategory(e.target.value)}}
+            onChange={e => {
+              onUpdateSelectedCategory(e.target.value)
+            }}
           >
             <option value="">Select a category you may</option>
             <option value="films">Films</option>
@@ -45,14 +40,19 @@ class SearchForm extends Component {
               selectedCategory={selectedCategory}
               keyword={searchKeyword}
               inputHandler={onUpdateSearchKeyword}
+              suggestions={suggestions}
+              fetchingSuggestionSuccess={fetchingSuggestionSuccess}
+              onUpdateSearchKeyword={onUpdateSearchKeyword}
+              onUpdateShowAutoSuggestion={onUpdateShowAutoSuggestion}
+              showAutoSuggestion={showAutoSuggestion}
             />
           }
           <div className="d-flex justify-content-between align-items-end">
             <p class="swapi-ref"><a class="swapi-link" href="https://swapi.co/" target="_blank">Powered by SWAPI</a></p>
             <button
-              type="button"
+              type="submit"
               className="btn btn-primary btn-section-search"
-              onClick={() => onSubmitSearchResult(searchKeyword)}
+              onClick={(e) => {e.preventDefault();onSubmitSearchResult(searchKeyword)}}
               disabled={!searchKeyword.length}
             >Use Force
             </button>

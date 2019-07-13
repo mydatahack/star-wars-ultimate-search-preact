@@ -6,6 +6,12 @@ import {
   UPDATE_FETCHING,
   UPDATE_SUCCESS,
   UPDATE_FAIL,
+  UPDATE_SUGGESTIONS,
+  UPDATE_FETCHING_SUGGESTION,
+  UPDATE_FETCHING_SUGGESTION_SUCCESS,
+  UPDATE_FETCHING_SUGGESTION_FAIL,
+  UPDATE_STOP_AUTO_SCROLL,
+  UPDATE_SHOW_AUTO_SUGGESTION
 
 } from '../constants/actionTypes'
 
@@ -20,7 +26,6 @@ const information = (state = initialState.information, action) => {
     return Object.assign({}, state, { searchKeyword: action.keyword })
 
   case UPDATE_SEARCH_RESULT:
-    console.log('inside reducer, checking data...', Object.assign({}, state, { person: action.searchResult }))
     return { ...state, ...{ searchResult: action.searchResult }}
 
   case UPDATE_FETCHING:
@@ -30,7 +35,26 @@ const information = (state = initialState.information, action) => {
     return { ...state, ...{ apiSuccess: action.apiSuccess }}
 
   case UPDATE_FAIL:
-    return { ...state, ... { apiFailed: action.apiFailed}}
+    return { ...state, ...{ apiFailed: action.apiFailed }}
+
+  case UPDATE_SUGGESTIONS:
+    return { ...state, ...{ suggestions: action.suggestions }}
+
+  case UPDATE_FETCHING_SUGGESTION:
+    return { ...state, ...{ fetchingSuggestion: action.fetchingSuggestion }}
+
+  case UPDATE_FETCHING_SUGGESTION_SUCCESS:
+    return { ...state, ...{ fetchingSuggestionSuccess: action.fetchingSuggestionSuccess }}
+
+  case UPDATE_FETCHING_SUGGESTION_FAIL:
+    return { ...state, ...{ fetchingSuggestionFailed: action.fetchingSuggestionFailed }}
+
+  case UPDATE_STOP_AUTO_SCROLL:
+    return { ...state, ...{ stopAutoScroll: action.stopAutoScroll }}
+
+  case UPDATE_SHOW_AUTO_SUGGESTION:
+    return { ...state, ...{ showAutoSuggestion: action.showAutoSuggestion }}
+
   default:
     return state
   }

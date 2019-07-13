@@ -64,6 +64,12 @@ body {
   margin-top: 20px;
 }
 
+.keyword-input-help {
+  margin-bottom: 10px;
+  // font-size: 0.875rem;
+  font-style: italic;
+  
+}
 .btn-section-search {
   margin-top: 40px;
   width: 160px;
@@ -104,6 +110,9 @@ body {
 }
 
 /* Result table style */
+.search-result-container {
+  margin-top: 60px;
+}
 .search-result-title {
   color: #15b7bd;
   text-align: center;
@@ -164,6 +173,55 @@ body {
       padding: 5px 5px;
     }
   }
+}
+
+// Auto suggestion
+// .keyword-dropdown {
+//   display: none;
+// }
+// .keyword-input:focus + .keyword-dropdown {
+//   position: absolute;
+//   display: block;
+//   width: 100%;
+//   padding: .375rem .75rem;
+//   font-size: 1rem;
+//   line-height: 1.5;
+//   color: #495057;
+//   background-color: #fff;
+//   background-clip: padding-box;
+//   border: 1px solid #ced4da;
+//   border-radius: .25rem;
+//   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+//   list-style-type: none;
+//   margin-top: 1px;
+// }
+.keyword-dropdown {
+  position: absolute;
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  list-style-type: none;
+  margin-top: 1px;
+}
+.suggestion {
+  padding-top: 5px;
+  color: #495057db;
+  -webkit-user-select: all;  /* Chrome 49+ */
+  -moz-user-select: all;     /* Firefox 43+ */
+  -ms-user-select: all;      /* No support yet */
+  user-select: all;          /* Likely future */   
+}
+.suggestion:hover {
+  cursor: pointer;
+  // text-decoration: underline;
 }
 
 // Spinner from https://loading.io/css/

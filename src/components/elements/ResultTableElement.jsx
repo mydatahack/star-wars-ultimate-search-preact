@@ -8,11 +8,9 @@ const ResultTableElement = ({searchResult}) => {
     if (key !== 'name' && key !== 'title' && key !== 'resource') {
       if (Array.isArray(searchResult[key])) {
         list = <ResultTableDataList array={searchResult[key]} />
-        console.log('searchResult is an array, ', list)
       } else {
         list = <ul><li>{searchResult[key]}</li></ul>
       }
-      console.log(list)
       return (
         <tr class="result-tr">
           <th class="result-th">{key}</th>

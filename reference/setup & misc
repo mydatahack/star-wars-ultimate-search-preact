@@ -88,3 +88,30 @@ Don't need settings
     }
   },
   ...
+
+
+##### functional element with ref
+
+this.keyword is undefined, which makes sense for the functional component.
+Not sure how to use ref in functional component, because createRef is missing 
+from this version of peract.
+
+  const SearchInput = ({ selectedCategory, keyword, inputHandler }) => {
+  const data = getSearchKeywordText(selectedCategory)
+  if (this.keywordInput) this.keywordInput.focus()
+  return (
+    <div className="search-text-input">
+      <label htmlFor="keyword">{data.label}</label>
+      <input
+        className="keyword-input form-control"
+        type="text"
+        name="keyword"
+        id="keyword"
+        placeholder={data.placeholder}
+        value={keyword}
+        onInput={e => {inputHandler(e.target.value)}}
+        ref={element => this.keywordInput = element}
+      />
+    </div>
+  )
+}

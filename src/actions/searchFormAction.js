@@ -4,7 +4,13 @@ import {
   UPDATE_SEARCH_RESULT,
   UPDATE_FETCHING,
   UPDATE_FAIL,
-  UPDATE_SUCCESS
+  UPDATE_SUCCESS,
+  UPDATE_SUGGESTIONS,
+  UPDATE_FETCHING_SUGGESTION,
+  UPDATE_FETCHING_SUGGESTION_SUCCESS,
+  UPDATE_FETCHING_SUGGESTION_FAIL,
+  UPDATE_STOP_AUTO_SCROLL,
+  UPDATE_SHOW_AUTO_SUGGESTION
 } from '../constants/actionTypes'
 
 import {
@@ -12,11 +18,19 @@ import {
   FILMS,
   PLANETS,
   SPECIES,
-  STARSHIPS
+  STARSHIPS,
+  VEHICLES
 } from '../constants/constantValues'
 
-import { searchByCategory } from '../utils/api'
-import { personMapper } from '../utils/mapper'
+import { searchByCategory, getSuggestion } from '../utils/api'
+import {
+  personMapper,
+  filmMapper,
+  planetMapper,
+  speciesMapper,
+  starshipMapper,
+  vehicleMapper
+} from '../utils/mapper'
 
 export const updateSelectedCategory = (selectedCategory) => {
   return {
@@ -39,7 +53,7 @@ const updateSearchResult = (searchResult) => {
   }
 }
 
-const updateFetching = (fetching) => {
+const updateFetching= (fetching) => {
   return {
     type: UPDATE_FETCHING,
     fetching
@@ -53,10 +67,98 @@ const updateApiSuccess = (apiSuccess) => {
   }
 }
 
-const updateApiFail = (apiFailed) => {
+const updateApiFail = (apiFail) => {
   return {
     type: UPDATE_FAIL,
-    apiFailed
+    apiFail
+  }
+}
+
+const updateSuggestions = (suggestions) => {
+  return {
+    type: UPDATE_SUGGESTIONS,
+    suggestions
+  }
+}
+
+const updateFetchingSuggestionSuccess = (fetchingSuggestionSuccess) => {
+  return {
+    type: UPDATE_FETCHING_SUGGESTION_SUCCESS,
+    fetchingSuggestionSuccess
+  }
+}
+const updateFetchingSuggestion= (fetchingSuggestion) => {
+  return {
+    type: UPDATE_FETCHING_SUGGESTION,
+    fetchingSuggestion
+  }
+}
+
+const updateFetchingSuggesionFail = (fetchingSuggestionFail) => {
+  return {
+    type: UPDATE_FETCHING_SUGGESTION_FAIL,
+    fetchingSuggestionFail
+  }
+}
+
+const updateStopAutoScroll = (stopAutoScroll) => {
+  return {
+    type: UPDATE_STOP_AUTO_SCROLL,
+    stopAutoScroll
+  }
+}
+
+export const updateShowAutoSuggestion = (showAutoSuggestion) => {
+  return {
+    type: UPDATE_SHOW_AUTO_SUGGESTION,
+    showAutoSuggestion
+  }
+}
+
+export const updateSuggestionResults = (keyword) => async (dispatch, getState) => {
+
+  dispatch(updateSearchKeyword(keyword))
+  console.log(keyword, !keyword.length)
+
+  // stop auto scroll
+  if (!getState().information.stopAutoScroll) {
+    dispatch(updateStopAutoScroll(true))
+  }
+
+  if (keyword.length) {
+    console.log('insite keyword.length')
+    // setting API status
+    dispatch(updateFetchingSuggestion(true))
+
+    // make sure to fire only one api call
+    const isFetching = getState().information.fetchingSuggestion
+    if (isFetching) {
+
+      // first reset fetchingSuggestionFail
+      if (getState().information.fetchingSuggestionFail) {
+        dispatch(updateFetchingSuggesionFail(false))
+      }
+
+      // then, reset fetchingSuggestionSuccess
+      if (getState().information.fetchingSuggestionSuccess) {
+        dispatch(updateFetchingSuggestionSuccess(false))
+      }
+
+      // call api and update suggestions array
+      try {
+        const selectedCategory = getState().information.selectedCategory
+        const suggestions = await getSuggestion(selectedCategory, keyword)
+        console.log('checking suggestions, ', suggestions)
+        dispatch(updateSuggestions(suggestions))
+        dispatch(updateFetchingSuggestion(false))
+        dispatch(updateFetchingSuggestionSuccess(true))
+      } catch(e) {
+        dispatch(updateFetchingSuggestion(false))
+      }
+    } else {
+    // if still fetchingSuggestion, don't do any AJAX call.
+      dispatch(updateSearchKeyword(keyword))
+    }
   }
 }
 
@@ -80,27 +182,30 @@ export const submitSearchResult =  (keyword) => {
       switch(selectedCategory) {
       case PEOPLE:
         searchResult = await personMapper(searchData.results[0])
-        console.log('checking person data: ', searchResult)
         break
       case FILMS:
-
+        searchResult = await filmMapper(searchData.results[0])
         break
       case PLANETS:
-
+        searchResult = await planetMapper(searchData.results[0])
         break
       case SPECIES:
-
+        searchResult = await speciesMapper(searchData.results[0])
         break
       case STARSHIPS:
-
+        searchResult = await starshipMapper(searchData.results[0])
         break
       case VEHICLES:
-
+        searchResult = await vehicleMapper(searchData.results[0])
         break
       }
       dispatch(updateFetching(false))
       dispatch(updateApiSuccess(true))
       dispatch(updateSearchResult(searchResult))
+      // enabling auto scroll
+      if (getState().information.stopAutoScroll) {
+        dispatch(updateStopAutoScroll(false))
+      }
     } catch(e) {
       dispatch(updateFetching(false))
       dispatch(updateApiFail(true))

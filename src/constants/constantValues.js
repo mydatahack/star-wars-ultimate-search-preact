@@ -12,6 +12,10 @@ export const STARSHIPS_PLACEHOLDER = 'Enter a spaceship you seek'
 export const VEHICLES_LABEL = 'Seek vehicle'
 export const VEHICLES_PLACEHOLDER = 'Enter a vehicle you seek'
 
+// input help
+export const SELECT_FIELD_HELP = '"Through the Force, things you will see. Other places. The future...the past. Old firends long gone."'
+export const INPUT_FIELD_HELP = '"Spelling you must not fear, my young padawan. Auto-complete Jedi power will."'
+
 // categories
 export const PEOPLE = 'people'
 export const FILMS  = 'films'

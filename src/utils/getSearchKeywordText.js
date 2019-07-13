@@ -16,7 +16,7 @@ import  {
   PLANETS,
   SPECIES,
   STARSHIPS,
-  VHEICLES
+  VEHICLES
 
 } from '../constants/constantValues'
 
