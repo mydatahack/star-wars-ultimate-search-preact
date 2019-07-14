@@ -62,7 +62,7 @@ class SearchInput extends Component {
           }}
           ref={element => this.keywordInput = element}
         />
-        {(fetchingSuggestionSuccess && keyword.length > 0 && showAutoSuggestion) &&
+        {(fetchingSuggestionSuccess && keyword.length > 0 && showAutoSuggestion && suggestions.length > 0)  &&
           <AutoSuggestion
             suggestions={suggestions}
             onUpdateSearchKeyword={onUpdateSearchKeyword}

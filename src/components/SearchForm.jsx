@@ -1,6 +1,6 @@
 import { h, render, Component} from 'preact'
 import SearchInput from './SearchInput'
-import { SELECT_FIELD_HELP } from '../constants/constantValues'
+import { SELECT_FIELD_HELP, SWAPI_REFERENCE } from '../constants/constantValues'
 import SquareLoader from '../components/elements/SquareLoader'
 
 class SearchForm extends Component {
@@ -68,8 +68,9 @@ class SearchForm extends Component {
             />
           }
           <div className="d-flex justify-content-between align-items-end">
-            <p class="swapi-ref"><a class="swapi-link" href="https://swapi.co/" target="_blank">Powered by SWAPI</a></p>
+            <p class="swapi-ref"><a class="swapi-link" href="https://swapi.co/" target="_blank">{SWAPI_REFERENCE}</a></p>
             {fetchingSuggestion && showAutoSuggestion && <SquareLoader/>}
+
             <button
               type="submit"
               className="btn btn-primary btn-section-search"

@@ -2,10 +2,8 @@ import { h, Component } from 'preact'
 import Spinner from './elements/Spinner'
 import ResultTableElement from './elements/ResultTableElement'
 
-
 class ResultTable extends Component {
 
-  state = this.props.information.searchResult
   scrollResults = () => {
     if(this.searchTitle) {
       this.searchTitle.scrollIntoView({ alignToTop: 'true', behavior: 'smooth'})
