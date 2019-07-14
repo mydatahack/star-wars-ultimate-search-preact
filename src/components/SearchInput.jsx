@@ -7,14 +7,19 @@ class SearchInput extends Component {
 
   focusKeywordInput = () => {
     if (this.keywordInput && this.props.focusKeywordInput) {
-      console.log('checking window width', window.innerWidth)
+      // console.log('checking window width', window.innerWidth)
       this.keywordInput.focus()
       if (window.innerWidth <= 600) {
         this.keywordInputLabel.scrollIntoView({ alignToTop: 'true', behavior: 'smooth'})
-        console.log('scrolling to top (keybord input)')
+        // console.log('scrolling to top (keybord input)')
       }
     }
   }
+
+  componentDidMount() {
+    this.focusKeywordInput()
+  }
+
   componentDidUpdate() {
     this.focusKeywordInput()
   }
@@ -32,8 +37,6 @@ class SearchInput extends Component {
     } = this.props
 
     const data = getSearchKeywordText(selectedCategory)
-
-    this.focusKeywordInput()
 
     return (
       <div className="search-text-input">

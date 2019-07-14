@@ -134,7 +134,7 @@ export const updateSuggestionResults = (keyword) => async (dispatch, getState) =
   }
 
   if (keyword.length) {
-    console.log('insite keyword.length')
+
     // setting API status
     dispatch(updateFetchingSuggestion(true))
 
@@ -156,7 +156,7 @@ export const updateSuggestionResults = (keyword) => async (dispatch, getState) =
       try {
         const selectedCategory = getState().information.selectedCategory
         const suggestions = await getSuggestion(selectedCategory, keyword)
-        console.log('checking suggestions, ', suggestions)
+        // console.log('checking suggestions, ', suggestions)
         dispatch(updateSuggestions(suggestions))
         dispatch(updateFetchingSuggestion(false))
         dispatch(updateFetchingSuggestionSuccess(true))

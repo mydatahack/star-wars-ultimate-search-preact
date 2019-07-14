@@ -27,7 +27,9 @@ npm i --save bootstrap styled-jsx-preact node-sass
 
 # babel
 # use @babel/plugin-transform-react-jsx with pragma option instead of @babel/preset-react
-npm  i --save-dev @babel/core @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime @babel/polyfill @babel/preset-env @babel/register @babel/runtime babel-loader @babel/plugin-transform-react-jsx
+npm  i --save-dev @babel/core @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime ^
+@babel/polyfill @babel/preset-env @babel/register @babel/runtime babel-loader @babel/plugin-transform-react-jsx ^
+babel-plugin-transform-remove-console
 
 # eslint
 npm i --save-dev eslint eslint-plugin-react babel-eslint eslint-config-airbnb
