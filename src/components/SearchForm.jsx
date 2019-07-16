@@ -21,7 +21,8 @@ class SearchForm extends Component {
       onUpdateSearchKeyword,
       onSubmitSearchResult,
       onUpdateShowAutoSuggestion,
-      onUpdateFocusKeywordInput
+      onUpdateFocusKeywordInput,
+      onClearSearchKeyword
     } = this.props
 
     return (
@@ -42,6 +43,7 @@ class SearchForm extends Component {
             value={selectedCategory}
             onChange={e => {
               onUpdateSelectedCategory(e.target.value)
+              onClearSearchKeyword('')
               onUpdateFocusKeywordInput(true)
             }}
           >

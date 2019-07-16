@@ -6,7 +6,8 @@ import {
   updateShowAutoSuggestion,
   updateSuggestionResults,
   submitSearchResult,
-  updateFocusKeywordInput
+  updateFocusKeywordInput,
+  updateSearchKeyword
 } from '../../actions/searchFormAction'
 
 const mapStateToProps = (state) => {
@@ -20,6 +21,9 @@ const mapDispatchToProps = (dispatch, ownProps, state) => {
     },
     onUpdateSearchKeyword: (keyword) => {
       dispatch(updateSuggestionResults(keyword))
+    },
+    onClearSearchKeyword: (keyword) => {
+      dispatch(updateSearchKeyword(keyword))
     },
     onSubmitSearchResult: (keyword) => {
       dispatch(submitSearchResult(keyword))

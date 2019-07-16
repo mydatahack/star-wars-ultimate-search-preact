@@ -210,7 +210,7 @@ export const submitSearchResult =
       dispatch(updateStopAutoScroll(false))
     }
   } catch(e) {
-    console.log(e)
+    // console.log(e)
     dispatch(updateFetching(false))
     dispatch(updateApiFail(true))
   }

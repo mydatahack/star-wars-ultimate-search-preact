@@ -52,6 +52,7 @@ describe('<SearchForm />' ,() => {
   const onUpdateFocusKeywordInputSpy = sinon.spy()
   const onSubmitSearchResultSpy = sinon.spy()
   const onUpdateShowAutoSuggestionSpy = sinon.spy()
+  const onClearSearchKeywordSpy = sinon.spy()
   const defaultWrapper = mount(
     <SearchForm
       information={defaultInformation}
@@ -60,6 +61,7 @@ describe('<SearchForm />' ,() => {
       onUpdateSearchKeyword={()=>{}}
       onSubmitSearchResult={onSubmitSearchResultSpy}
       onUpdateShowAutoSuggestion={onUpdateShowAutoSuggestionSpy}
+      onClearSearchKeyword={onClearSearchKeywordSpy}
     />
   )
 
@@ -71,6 +73,7 @@ describe('<SearchForm />' ,() => {
     selectElement.simulate('change')
     expect(onUpdateSelectedCategorySpy.calledWith('people')).to.equal(true)
     expect(onUpdateFocusKeywordInputSpy.calledWith(true)).to.equal(true)
+    expect(onClearSearchKeywordSpy.calledWith('')).to.equal(true)
   })
 
   it('should fire submit event', () => {
