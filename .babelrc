@@ -5,7 +5,6 @@
   "plugins": [
     ["@babel/plugin-transform-react-jsx", { "pragma":"h" }],
     "@babel/plugin-proposal-class-properties",
-    "@babel/transform-runtime",
-    ["transform-remove-console", { "exclude": [ "error", "warn"] }]
+    "@babel/transform-runtime"
   ],
 }

@@ -23,15 +23,8 @@ import {
   VEHICLES
 } from '../constants/constantValues'
 
-import { searchByCategory, getSuggestion } from '../utils/api'
-import {
-  personMapper,
-  filmMapper,
-  planetMapper,
-  speciesMapper,
-  starshipMapper,
-  vehicleMapper
-} from '../utils/mapper'
+import { actionMapper } from '../utils/mapper'
+import { getSuggestion, searchByCategory } from '../utils/api'
 
 export const updateSelectedCategory = (selectedCategory) => {
   return {
@@ -123,10 +116,26 @@ export const updateFocusKeywordInput = (focusKeywordInput) => {
   }
 }
 
-export const updateSuggestionResults = (keyword) => async (dispatch, getState) => {
+// this is for simple unit test example for redux-thunk action
+export const testAsyncAction = (keyword, getSuggestionFunc=getSuggestion) => async (dispatch, getState) => {
+
+  try {
+    const selectedCategory = getState().information.selectedCategory
+    const suggestions = await getSuggestionFunc(selectedCategory, keyword)
+    dispatch(updateSuggestions(suggestions))
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+export const updateSuggestionResults =
+(
+  keyword,
+  getSuggestionFunc=getSuggestion
+) => async (dispatch, getState) => {
 
   dispatch(updateSearchKeyword(keyword))
-  console.log(keyword, !keyword.length)
+  // console.log(keyword, !keyword.length)
 
   // stop auto scroll
   if (!getState().information.stopAutoScroll) {
@@ -134,16 +143,18 @@ export const updateSuggestionResults = (keyword) => async (dispatch, getState) =
   }
 
   if (keyword.length) {
+    // checking current fetching status
+    // if it is false, it goes fetching
+    const isFetching = getState().information.fetchingSuggestion
 
     // setting API status
     dispatch(updateFetchingSuggestion(true))
 
     // make sure to fire only one api call
-    const isFetching = getState().information.fetchingSuggestion
-    if (isFetching) {
+    if (!isFetching) {
 
-      // first reset fetchingSuggestionFail
-      if (getState().information.fetchingSuggestionFail) {
+      // first reset fetchingSuggestionF ail
+      if (getState().information.fetchingSuggestionFailed) {
         dispatch(updateFetchingSuggesionFail(false))
       }
 
@@ -155,7 +166,8 @@ export const updateSuggestionResults = (keyword) => async (dispatch, getState) =
       // call api and update suggestions array
       try {
         const selectedCategory = getState().information.selectedCategory
-        const suggestions = await getSuggestion(selectedCategory, keyword)
+        // console.log('executing getStuggestion()')
+        const suggestions = await getSuggestionFunc(selectedCategory, keyword)
         // console.log('checking suggestions, ', suggestions)
         dispatch(updateSuggestions(suggestions))
         dispatch(updateFetchingSuggestion(false))
@@ -163,63 +175,44 @@ export const updateSuggestionResults = (keyword) => async (dispatch, getState) =
       } catch(e) {
         dispatch(updateFetchingSuggestion(false))
       }
-    } else {
-    // if still fetchingSuggestion, don't do any AJAX call.
-      dispatch(updateSearchKeyword(keyword))
     }
   }
 }
 
-export const submitSearchResult =  (keyword) => {
-  return async (dispatch, getState) => {
+export const submitSearchResult =
+(
+  keyword,
+  searchByCategoryFunc=searchByCategory,
+  actionMapperFunc=actionMapper
+) => async (dispatch, getState) => {
 
-    // Setting API status
-    dispatch(updateFetching(true))
-    if(getState().information.apiFailed) {
-      dispatch(updateApiFail(false))
+  // Setting API status
+  dispatch(updateFetching(true))
+  if(getState().information.apiFailed) {
+    dispatch(updateApiFail(false))
+  }
+
+  // Start API
+  try {
+    const selectedCategory = getState().information.selectedCategory
+    console.log('checking selectedCategory: ', selectedCategory)
+    const searchData = await searchByCategoryFunc(selectedCategory, keyword)
+    console.log('checking searchData ', searchData)
+
+    // get searchResult data
+    const searchResult = await actionMapperFunc(selectedCategory, searchData)
+
+    dispatch(updateFetching(false))
+    dispatch(updateApiSuccess(true))
+    dispatch(updateSearchResult(searchResult))
+    // enabling auto scroll
+    if (getState().information.stopAutoScroll) {
+      dispatch(updateStopAutoScroll(false))
     }
-
-    // Start API
-    try {
-      const selectedCategory = getState().information.selectedCategory
-      console.log('checking selectedCategory: ', selectedCategory)
-      const searchData = await searchByCategory(selectedCategory, keyword)
-      console.log('checking searchData ', searchData)
-
-      // searchResult to be passed into action
-      let searchResult
-
-      switch(selectedCategory) {
-      case PEOPLE:
-        searchResult = await personMapper(searchData.results[0])
-        break
-      case FILMS:
-        searchResult = await filmMapper(searchData.results[0])
-        break
-      case PLANETS:
-        searchResult = await planetMapper(searchData.results[0])
-        break
-      case SPECIES:
-        searchResult = await speciesMapper(searchData.results[0])
-        break
-      case STARSHIPS:
-        searchResult = await starshipMapper(searchData.results[0])
-        break
-      case VEHICLES:
-        searchResult = await vehicleMapper(searchData.results[0])
-        break
-      }
-      dispatch(updateFetching(false))
-      dispatch(updateApiSuccess(true))
-      dispatch(updateSearchResult(searchResult))
-      // enabling auto scroll
-      if (getState().information.stopAutoScroll) {
-        dispatch(updateStopAutoScroll(false))
-      }
-    } catch(e) {
-      console.log(e)
-      dispatch(updateFetching(false))
-      dispatch(updateApiFail(true))
-    }
+  } catch(e) {
+    console.log(e)
+    dispatch(updateFetching(false))
+    dispatch(updateApiFail(true))
   }
 }
+

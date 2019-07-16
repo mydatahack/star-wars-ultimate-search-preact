@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps, state) => {
       dispatch(updateSelectedCategory(selectedCategory))
     },
     onUpdateSearchKeyword: (keyword) => {
-      // dispatch(updateSearchKeyword(keyword))
       dispatch(updateSuggestionResults(keyword))
     },
     onSubmitSearchResult: (keyword) => {

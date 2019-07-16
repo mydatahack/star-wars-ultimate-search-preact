@@ -31,6 +31,28 @@ export const mapper = (response, model) => {
   return model
 }
 
+export const actionMapper = async (selectedCategory, searchData) => {
+  switch(selectedCategory) {
+  case PEOPLE:
+    return await personMapper(searchData.results[0])
+
+  case FILMS:
+    return await filmMapper(searchData.results[0])
+
+  case PLANETS:
+    return await planetMapper(searchData.results[0])
+
+  case SPECIES:
+    return await speciesMapper(searchData.results[0])
+
+  case STARSHIPS:
+    return await starshipMapper(searchData.results[0])
+
+  case VEHICLES:
+    return await vehicleMapper(searchData.results[0])
+  }
+}
+
 export const personMapper = async (response) => {
   person.resource = PEOPLE
   person.name = response.name
@@ -128,5 +150,3 @@ export const vehicleMapper = async (response) => {
   vehicle.films = (await doArrayApiCall(response.films)).map(data => data.title)
   return vehicle
 }
-
-
