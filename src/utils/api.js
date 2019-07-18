@@ -27,7 +27,7 @@ export const searchRequest = (url) => {
     })
 }
 
-const getCategoryUrl = (category) => {
+export const getCategoryUrl = (category) => {
   switch(category) {
   case PEOPLE:
     return PEOPLE_SEARCH_URL
@@ -64,7 +64,7 @@ export const doArrayApiCall = (urlArray) => {
 
 export const getSuggestion = async (category, keyword) => {
   try {
-    console.log(getCategoryUrl(category) + keyword)
+    // console.log(getCategoryUrl(category) + keyword)
     const data = await searchRequest(getCategoryUrl(category) + keyword)
     let suggestions
     if (category !== FILMS) {

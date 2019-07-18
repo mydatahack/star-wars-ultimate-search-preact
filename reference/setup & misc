@@ -36,7 +36,7 @@ npm i --save-dev eslint eslint-plugin-react babel-eslint eslint-config-airbnb
 
 # unit test 
 # use enzyme-adapter-preact-pure instead of enzyme-adapter-react-16 (https://www.npmjs.com/package/enzyme-adapter-preact-pure)
-npm i --save-dev mocha chai jsdom enzyme enzyme-adapter-preact-pure redux-mock-store
+npm i --save-dev mocha chai jsdom enzyme enzyme-adapter-preact-pure redux-mock-store nyc
 
 
 ###################################################
